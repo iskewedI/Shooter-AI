@@ -6,7 +6,7 @@ public class PlayerLook : MonoBehaviour
 
     [SerializeField] private float xSensitivity = 30f;
     [SerializeField] private float ySensitivity = 30f;
-    [SerializeField] private float maxLookDistance = 2f;
+    [SerializeField] private float maxLookDistance = 15f;
 
     public float xRotation = 0f;
 

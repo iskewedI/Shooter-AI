@@ -7,16 +7,17 @@ public class SpawnAreaController : MonoBehaviour
     // Define the event using the delegate type.
     public static event TargetDespawnedHandler OnTargetDespawned;
 
-    private ObjectPooler pooler;
+    [Range(1, 4)]
+    public float minLifeTime;
+    [Range(1, 4)]
+    public float maxLifeTime;
+
     [SerializeField] private BoxCollider boxCollider;
 
     [SerializeField] private Vector3 size;
     [SerializeField] private Color gizmoColor = Color.red;
 
-    [Range(1, 4)]
-    public float minLifeTime;
-    [Range(1, 4)]
-    public float maxLifeTime;
+    private ObjectPooler pooler;
 
     // In this moment the collider can be set, and this is called BEFORE the gizmos are drawn.
     // We need this to get the box collider size to be sync with the spawn size changes.
@@ -51,6 +52,7 @@ public class SpawnAreaController : MonoBehaviour
 
         // Infinite target
         targetController.Initialize(-1, HandleTargetDestroy);
+        targetController.MoveBetween(-size.x, size.x, 0.5f);
     }
 
     private void HandleTargetDestroy(GameObject gameObject)

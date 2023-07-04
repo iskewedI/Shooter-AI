@@ -184,11 +184,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a64d39594b7364147ab7d2f1891b85ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minLifeTime: 4
+  maxLifeTime: 4
   boxCollider: {fileID: 3061748079842649004}
   size: {x: 9.14, y: 0.5, z: 0}
   gizmoColor: {r: 1, g: 0, b: 0, a: 1}
-  minLifeTime: 4
-  maxLifeTime: 4
 --- !u!114 &4525007513747972612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -494,6 +494,7 @@ GameObject:
   - component: {fileID: 6342126021736397339}
   - component: {fileID: 8490106731194343116}
   - component: {fileID: 5109084891413412384}
+  - component: {fileID: 4231440821302585979}
   - component: {fileID: 266870004151063988}
   - component: {fileID: 3767646113646378454}
   - component: {fileID: 30037175673270688}
@@ -599,6 +600,20 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4231440821302585979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9102447768184071654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee68cd218041f904582697dcc91fff9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 6957586217618459828, guid: 8bfe6ef8356c9a64ba1a9eca36c3937f, type: 3}
+  initialPoolSize: 15
 --- !u!114 &266870004151063988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -626,6 +641,7 @@ MonoBehaviour:
   cam: {fileID: 8556800649828791013}
   xSensitivity: 30
   ySensitivity: 30
+  maxLookDistance: 15
   xRotation: 0
 --- !u!114 &30037175673270688
 MonoBehaviour:
@@ -634,12 +650,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9102447768184071654}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbd36446c27f643489aa90e7f729bbb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpawnPoint: {fileID: 0}
+  bulletSpawnPoint: {fileID: 5367019862630834907}
   manualControl: 0
 --- !u!114 &2352654573321400869
 MonoBehaviour:
