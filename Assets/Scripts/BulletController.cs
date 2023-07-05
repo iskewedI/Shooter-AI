@@ -12,7 +12,7 @@ public class BulletController : MonoBehaviour
     public static event BulletHitHandler OnBulletHit;
 
     // On Bullet Hit Event
-    public delegate void BulletMissHandler(bool hasHitWall);
+    public delegate void BulletMissHandler();
     public static event BulletMissHandler OnBulletMiss;
 
     public delegate void OnDestroy(GameObject gameObject);
@@ -35,7 +35,7 @@ public class BulletController : MonoBehaviour
 
         if (Vector3.Distance(startPosition, transform.localPosition) > range)
         {
-            OnBulletMiss(false);
+            OnBulletMiss();
             onDestroy?.Invoke(gameObject);
 
             // Destroy the bullet when it has traveled its maximum range
@@ -56,11 +56,11 @@ public class BulletController : MonoBehaviour
             OnBulletHit(timeTaken);
             onDestroy?.Invoke(gameObject);
         }
-        if (collider.gameObject.layer == 9) // Target Spawn Area
-        {
-            Debug.Log("Floor hit");
-            OnBulletMiss?.Invoke(true);
-            Destroy(gameObject);
-        }
+        //if (collider.gameObject.layer == 9) // Target Spawn Area
+        //{
+        //    Debug.Log("Floor hit");
+        //    OnBulletMiss?.Invoke(true);
+        //    Destroy(gameObject);
+        //}
     }
 }

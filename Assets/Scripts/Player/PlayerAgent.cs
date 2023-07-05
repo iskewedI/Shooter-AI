@@ -14,19 +14,19 @@ public class PlayerAgent : Agent
     // Reward if looked at the target.
     private readonly float OnTargetLookReward = +0.1f;
     // Small punishment if not looked at the target.
-    private readonly float OnTargetNoLookAtPlayerReward = -0.01f;
+    private readonly float OnTargetNoLookAtPlayerReward = -0.05f;
     // Small punishment when missed but at least it hit the target wall spawn point.
     //private readonly float OnMissButWallHitReward = +0.007f;
     // Punishment when floor hit.
-    private readonly float OnFloorHit = -100f;
+    //private readonly float OnFloorHit = -100f;
     // Punishment when totally missed.
-    private readonly float OnMissReward = -0.001f;
+    private readonly float OnMissReward = -0.1f;
     // Bigger punishment if a target despawn.
-    private readonly float OnTargetDespawn= -0.4f;
+    private readonly float OnTargetDespawn= -1f;
     // Punishment every time it shots to encourage it to throw shots with more accuracy.
-    //private readonly float OnShotReward = -0.005f;
+    //private readonly float OnShotReward = -0.5f;
     // Punishment for every step to ensure it doesn't stop shooting.
-    private readonly float OnStepReward = -0.0001f;
+    private readonly float OnStepReward = -0.001f;
 
 
     private new void OnEnable()
@@ -51,14 +51,14 @@ public class PlayerAgent : Agent
         continuousActions[0] = Input.GetAxis("Mouse X");
         continuousActions[1] = Input.GetAxis("Mouse Y");
 
-        //ActionSegment<int> discreteActions = actionsOut.DiscreteActions;
-        //discreteActions[0] = Input.GetKeyDown(KeyCode.W) ? 1 : 0;
+        ActionSegment<int> discreteActions = actionsOut.DiscreteActions;
+        discreteActions[0] = Input.GetKeyDown(KeyCode.W) ? 1 : 0;
     }
 
     public override void OnActionReceived(ActionBuffers actions)
     {
         // 1 -> Fire bullet. 0 -> Not fire bullet.
-        //bool shouldFire = actions.DiscreteActions[0] == 1;
+        bool shouldFire = actions.DiscreteActions[0] == 1;
 
         float lookX = actions.ContinuousActions[0];
         float lookY = actions.ContinuousActions[1];
@@ -83,16 +83,13 @@ public class PlayerAgent : Agent
             AddReward(OnTargetNoLookAtPlayerReward);
         }
 
-        //if (shouldFire)
-        //{
-        //    Debug.Log("Fire");
-        //    playerWeapon.FireBullet();
+        if (shouldFire)
+        {
+            Debug.Log("Fire");
+            playerWeapon.FireBullet();
 
-        //    //AddReward(OnShotReward);
-        //} else
-        //{
-        //    AddReward(OnStepReward);
-        //}
+            //AddReward(OnShotReward);
+        }
 
         AddReward(OnStepReward);
     }
@@ -110,21 +107,14 @@ public class PlayerAgent : Agent
             Debug.Log("Target hit slow");
             AddReward(OnTargetHitReward);
         }
+
         EndEpisode();
     }
 
-    public void HandleMiss(bool floorHit)
+    public void HandleMiss()
     {
-        if (floorHit)
-        {
-            SetReward(OnFloorHit);
-            EndEpisode();
-        } else
-        {
-            Debug.Log("Miss hit");
-            AddReward(OnMissReward);
-
-        }
+        Debug.Log("Miss hit");
+        AddReward(OnMissReward);
     }
 
     public void HandleTargetDespawn()

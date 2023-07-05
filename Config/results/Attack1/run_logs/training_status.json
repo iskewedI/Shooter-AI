@@ -2,22 +2,31 @@
     "Agent": {
         "checkpoints": [
             {
-                "steps": 15196,
-                "file_path": "results\\Attack1\\Agent\\Agent-15196.onnx",
-                "reward": -10.09734058380127,
-                "creation_time": 1688479250.0365021,
+                "steps": 499996,
+                "file_path": "results\\Attack1\\Agent\\Agent-499996.onnx",
+                "reward": 95.74751853942871,
+                "creation_time": 1688480653.3740318,
                 "auxillary_file_paths": [
-                    "results\\Attack1\\Agent\\Agent-15196.pt"
+                    "results\\Attack1\\Agent\\Agent-499996.pt"
+                ]
+            },
+            {
+                "steps": 667196,
+                "file_path": "results\\Attack1\\Agent\\Agent-667196.onnx",
+                "reward": 98.04376888275146,
+                "creation_time": 1688481268.4809473,
+                "auxillary_file_paths": [
+                    "results\\Attack1\\Agent\\Agent-667196.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 15196,
+            "steps": 667196,
             "file_path": "results\\Attack1\\Agent.onnx",
-            "reward": -10.09734058380127,
-            "creation_time": 1688479250.0365021,
+            "reward": 98.04376888275146,
+            "creation_time": 1688481268.4809473,
             "auxillary_file_paths": [
-                "results\\Attack1\\Agent\\Agent-15196.pt"
+                "results\\Attack1\\Agent\\Agent-667196.pt"
             ]
         }
     },

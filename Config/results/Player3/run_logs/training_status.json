@@ -1,0 +1,29 @@
+{
+    "Agent": {
+        "checkpoints": [
+            {
+                "steps": 83952,
+                "file_path": "results\\Player3\\Agent\\Agent-83952.onnx",
+                "reward": -364.02719347817555,
+                "creation_time": 1688569438.6245203,
+                "auxillary_file_paths": [
+                    "results\\Player3\\Agent\\Agent-83952.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 83952,
+            "file_path": "results\\Player3\\Agent.onnx",
+            "reward": -364.02719347817555,
+            "creation_time": 1688569438.6245203,
+            "auxillary_file_paths": [
+                "results\\Player3\\Agent\\Agent-83952.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.0.1"
+    }
+}

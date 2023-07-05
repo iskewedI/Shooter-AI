@@ -7,9 +7,9 @@ public class SpawnAreaController : MonoBehaviour
     // Define the event using the delegate type.
     public static event TargetDespawnedHandler OnTargetDespawned;
 
-    [Range(1, 4)]
+    [Range(1, 5)]
     public float minLifeTime;
-    [Range(1, 4)]
+    [Range(1, 5)]
     public float maxLifeTime;
 
     [SerializeField] private BoxCollider boxCollider;
@@ -51,14 +51,17 @@ public class SpawnAreaController : MonoBehaviour
         TargetController targetController = target.GetComponent<TargetController>();
 
         // Infinite target
-        targetController.Initialize(-1, HandleTargetDestroy);
-        targetController.MoveBetween(-size.x, size.x, 0.5f);
+        targetController.Initialize(lifeTime, HandleTargetDespawn, HandleTargetDestroy);
+        //targetController.MoveBetween(-size.x, size.x, 2f);
+    }
+    private void HandleTargetDespawn(GameObject gameObject)
+    {
+        OnTargetDespawned();
+        HandleTargetDestroy(gameObject);
     }
 
     private void HandleTargetDestroy(GameObject gameObject)
     {
-        //OnTargetDespawned();
-
         pooler.ReturnToPool(gameObject);
 
         StartTargetSpawn();
