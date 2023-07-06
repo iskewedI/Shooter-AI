@@ -2,22 +2,22 @@
     "Agent": {
         "checkpoints": [
             {
-                "steps": 8488,
-                "file_path": "results\\Player2\\Agent\\Agent-8488.onnx",
-                "reward": -339.0781638281686,
-                "creation_time": 1688569882.4640055,
+                "steps": 1600,
+                "file_path": "results\\Player2\\Agent\\Agent-1600.onnx",
+                "reward": -509.46742528676987,
+                "creation_time": 1688571547.5166054,
                 "auxillary_file_paths": [
-                    "results\\Player2\\Agent\\Agent-8488.pt"
+                    "results\\Player2\\Agent\\Agent-1600.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 8488,
+            "steps": 1600,
             "file_path": "results\\Player2\\Agent.onnx",
-            "reward": -339.0781638281686,
-            "creation_time": 1688569882.4640055,
+            "reward": -509.46742528676987,
+            "creation_time": 1688571547.5166054,
             "auxillary_file_paths": [
-                "results\\Player2\\Agent\\Agent-8488.pt"
+                "results\\Player2\\Agent\\Agent-1600.pt"
             ]
         }
     },

@@ -60,10 +60,10 @@ public class TargetController : MonoBehaviour
 
         createdAt = Time.time;
 
-        if (liveFor >= 0)
-        {
-            StartCoroutine(StartLife(liveFor));
-        }
+        //if (liveFor >= 0)
+        //{
+        //    StartCoroutine(StartLife(liveFor));
+        //}
     }
 
     private IEnumerator StartLife(float liveFor)
@@ -79,6 +79,7 @@ public class TargetController : MonoBehaviour
     public void TakeDamage(float amount)
     {
         health -= amount;
+        Debug.Log($"Taking damage {amount}");
 
         if (health <= 0)
         {

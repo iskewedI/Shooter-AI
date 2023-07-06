@@ -4,9 +4,9 @@ public class PlayerLook : MonoBehaviour
 {
     public Camera cam;
 
+    public float maxLookDistance = 10f;
     [SerializeField] private float xSensitivity = 30f;
     [SerializeField] private float ySensitivity = 30f;
-    [SerializeField] private float maxLookDistance = 15f;
 
     public float xRotation = 0f;
 
@@ -21,7 +21,7 @@ public class PlayerLook : MonoBehaviour
 
     }
 
-    public Collider ProcessLook(Vector2 input)
+    public void ProcessLook(Vector2 input)
     {
         float mouseX = input.x;
 
@@ -33,18 +33,5 @@ public class PlayerLook : MonoBehaviour
         //cam.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
         transform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * xSensitivity);
-
-
-        RaycastHit hit;
-        if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, maxLookDistance)) 
-        {
-            Debug.DrawRay(cam.transform.position, cam.transform.TransformDirection(Vector3.forward) * hit.distance, Color.red);
-
-            return hit.collider;
-        }
-
-        Debug.DrawRay(cam.transform.position, cam.transform.TransformDirection(Vector3.forward) * maxLookDistance, Color.green);
-        return null;
-
     }
 }

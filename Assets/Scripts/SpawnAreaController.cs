@@ -29,6 +29,8 @@ public class SpawnAreaController : MonoBehaviour
 
     private void Start()
     {
+        boxCollider = GetComponent<BoxCollider>();
+
         pooler = GetComponent<ObjectPooler>();
 
         StartTargetSpawn();
@@ -54,15 +56,16 @@ public class SpawnAreaController : MonoBehaviour
         targetController.Initialize(lifeTime, HandleTargetDespawn, HandleTargetDestroy);
         //targetController.MoveBetween(-size.x, size.x, 2f);
     }
-    private void HandleTargetDespawn(GameObject gameObject)
+    private void HandleTargetDespawn(GameObject obj)
     {
         OnTargetDespawned();
-        HandleTargetDestroy(gameObject);
+        HandleTargetDestroy(obj);
     }
 
-    private void HandleTargetDestroy(GameObject gameObject)
+    private void HandleTargetDestroy(GameObject obj)
     {
-        pooler.ReturnToPool(gameObject);
+        Debug.Log("Handle target destroy");
+        pooler.ReturnToPool(obj);
 
         StartTargetSpawn();
     }

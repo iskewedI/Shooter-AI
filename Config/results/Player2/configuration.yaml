@@ -12,8 +12,6 @@ behaviors:
       num_epoch: 3
       shared_critic: false
       learning_rate_schedule: constant
-      beta_schedule: constant
-      epsilon_schedule: constant
     network_settings:
       normalize: false
       hidden_units: 512
@@ -28,24 +26,15 @@ behaviors:
         strength: 1.0
         network_settings:
           normalize: false
-          hidden_units: 512
-          num_layers: 2
-          vis_encode_type: simple
-          memory: null
-          goal_conditioning_type: hyper
-          deterministic: false
-      curiosity:
-        gamma: 0.99
-        strength: 0.01
-        network_settings:
-          normalize: false
           hidden_units: 128
           num_layers: 2
           vis_encode_type: simple
           memory: null
           goal_conditioning_type: hyper
           deterministic: false
-        learning_rate: 0.0003
+      curiosity:
+        strength: 0.01
+        gamma: 0.99
         encoding_size: 128
     init_path: null
     keep_checkpoints: 5
@@ -70,18 +59,18 @@ engine_settings:
   width: 84
   height: 84
   quality_level: 5
-  time_scale: 20.0
+  time_scale: 20
   target_frame_rate: -1
   capture_frame_rate: 60
   no_graphics: false
 environment_parameters: null
 checkpoint_settings:
-  run_id: Player2
+  run_id: Agent
   initialize_from: null
   load_model: false
   resume: false
   force: true
-  train_model: true
+  train_model: false
   inference: false
   results_dir: results
 torch_settings:
