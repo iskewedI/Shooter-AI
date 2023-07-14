@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minLifeTime: 0
   maxLifeTime: 5
+  maxWaitTime: 0
   boxCollider: {fileID: 6852414995682821831}
   size: {x: 9.14, y: 0.3, z: 0}
   gizmoColor: {r: 1, g: 0, b: 0, a: 1}

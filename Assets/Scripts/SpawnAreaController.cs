@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class SpawnAreaController : MonoBehaviour
@@ -12,12 +13,15 @@ public class SpawnAreaController : MonoBehaviour
     [Range(1, 5)]
     public float maxLifeTime;
 
+    [SerializeField] private float maxWaitTime;
+
     [SerializeField] private BoxCollider boxCollider;
 
     [SerializeField] private Vector3 size;
     [SerializeField] private Color gizmoColor = Color.red;
 
     private ObjectPooler pooler;
+    private Coroutine runningCoroutine;
 
     // In this moment the collider can be set, and this is called BEFORE the gizmos are drawn.
     // We need this to get the box collider size to be sync with the spawn size changes.
@@ -43,23 +47,37 @@ public class SpawnAreaController : MonoBehaviour
 
         Vector3 randomPosition = transform.position + new Vector3(Random.Range(-x, x), Random.Range(y_distance, size.y + y_distance), 0);
 
-        SpawnTarget(Random.Range(minLifeTime, maxLifeTime), randomPosition, Quaternion.identity);
+        ClearCoroutine();
+        runningCoroutine = StartCoroutine(SpawnTarget(Random.Range(minLifeTime, maxLifeTime), randomPosition, Quaternion.identity));
     }
 
-    private void SpawnTarget(float lifeTime, Vector3 position, Quaternion rotation)
+    private IEnumerator SpawnTarget(float lifeTime, Vector3 position, Quaternion rotation)
     {
+        yield return new WaitForSeconds(Random.Range(0, maxWaitTime));
+
         GameObject target = pooler.SpawnFromPool(position, rotation, transform);
 
         TargetController targetController = target.GetComponent<TargetController>();
 
-        // Infinite target
-        targetController.Initialize(lifeTime, HandleTargetDespawn, HandleTargetDestroy);
+        targetController.Initialize(-1, HandleTargetDespawn, HandleTargetDestroy);
         //targetController.MoveBetween(-size.x, size.x, 2f);
     }
+
+    private void ClearCoroutine()
+    {
+        if (runningCoroutine != null)
+        {
+            StopCoroutine(runningCoroutine);
+            runningCoroutine = null;
+        }
+    }
+
     private void HandleTargetDespawn(GameObject obj)
     {
         OnTargetDespawned();
         HandleTargetDestroy(obj);
+
+        ClearCoroutine();
     }
 
     private void HandleTargetDestroy(GameObject obj)
@@ -67,6 +85,7 @@ public class SpawnAreaController : MonoBehaviour
         Debug.Log("Handle target destroy");
         pooler.ReturnToPool(obj);
 
+        ClearCoroutine();
         StartTargetSpawn();
     }
 

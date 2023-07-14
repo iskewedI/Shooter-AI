@@ -10,28 +10,22 @@ public class PlayerAgent : Agent
 
     [SerializeField] private Transform shootingPoint;
 
-    private bool ShotAvaliable = true;
-    private int StepsUntilShotIsAvaliable = 0;
     public int minStepsBetweenShots = 50;
 
-    // Bigger reward if hit the target really fast
-    private readonly float OnFastTargetHitReward = +2f;
+    private Camera agentCam;
+    private bool ShotAvaliable = true;
+    private int StepsUntilShotIsAvaliable = 0;
+
     // Reward if hit the target.
     private readonly float OnTargetHitReward = +1f;
     // Reward if looked at the target.
     private readonly float OnTargetLookReward = +0.01f;
     // Small punishment if not looked at the target.
     private readonly float OnTargetNoLookAtPlayerReward = -0.01f;
-    // Small punishment when missed but at least it hit the target wall spawn point.
-    //private readonly float OnMissButWallHitReward = +0.007f;
-    // Punishment when floor hit.
-    //private readonly float OnFloorHit = -100f;
     // Punishment when totally missed.
     private readonly float OnMissReward = -0.033f;
     // Bigger punishment if a target despawn.
     private readonly float OnTargetDespawn = -0.01f;
-    // Punishment every time it shots to encourage it to throw shots with more accuracy.
-    //private readonly float OnShotReward = -0.01f;
     // Punishment for every step to ensure it doesn't stop shooting.
     private readonly float OnStepReward = -0.0001f;
 
@@ -39,21 +33,18 @@ public class PlayerAgent : Agent
     {
         base.OnEnable();
         SpawnAreaController.OnTargetDespawned += HandleTargetDespawn;
-
-        //BulletController.OnBulletHit += HandleHit;
-        BulletController.OnBulletMiss += HandleMiss;
     }
 
     private void Start()
     {
         playerLook = GetComponent<PlayerLook>();
+        agentCam = playerLook.cam;
+
         playerWeapon = GetComponent<PlayerWeapon>();
     }
 
     private void FixedUpdate()
     {
-        Debug.DrawRay(transform.position, transform.forward * playerLook.maxLookDistance, Color.green, 1f);
-
         if (!ShotAvaliable)
         {
             StepsUntilShotIsAvaliable--;
@@ -86,7 +77,8 @@ public class PlayerAgent : Agent
         float lookY = actions.ContinuousActions[1];
 
         int targetLayerMask = 1 << LayerMask.NameToLayer("Target");
-        Vector3 direction = transform.forward;
+
+        Vector3 direction = agentCam.transform.forward * playerLook.maxLookDistance;
 
         Vector2 lookTo = new Vector2(lookX, lookY);
 
@@ -111,7 +103,7 @@ public class PlayerAgent : Agent
             if (!ShotAvaliable)
                 return;
 
-            Debug.DrawRay(transform.position, direction * playerLook.maxLookDistance, Color.red, 1f);
+            Debug.DrawRay(shootingPoint.position, direction, Color.red, 1f);
 
             if (targetLookHit)
             {
@@ -125,6 +117,10 @@ public class PlayerAgent : Agent
 
             ShotAvaliable = false;
             StepsUntilShotIsAvaliable = minStepsBetweenShots;
+        } else
+        {
+            // Debug where it's seeing
+            Debug.DrawRay(shootingPoint.position, direction, Color.green, 1f);
         }
     }
 
@@ -141,21 +137,6 @@ public class PlayerAgent : Agent
         AddReward(OnMissReward);
     }
 
-    //public void HandleHit(float timeTaken)
-    //{
-    //    if (timeTaken < 0.9)
-    //    {
-    //        Debug.Log("Target hit fast");
-    //        AddReward(OnFastTargetHitReward);
-
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("Target hit slow");
-    //        AddReward(OnTargetHitReward);
-    //    }
-    //}
-
     public void HandleTargetDespawn()
     {
         Debug.Log("Despawned");
@@ -167,7 +148,5 @@ public class PlayerAgent : Agent
         base.OnDisable();
 
         SpawnAreaController.OnTargetDespawned -= HandleTargetDespawn;
-        //BulletController.OnBulletHit -= HandleHit;
-        BulletController.OnBulletMiss -= HandleMiss;
     }
 }
